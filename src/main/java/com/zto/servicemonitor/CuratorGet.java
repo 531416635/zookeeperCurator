@@ -9,6 +9,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryNTimes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,8 +18,10 @@ import com.alibaba.fastjson.JSON;
 
 @RestController
 public class CuratorGet {
-	private static final String ZK_ADDRESS = "10.10.19.47:2181";
-	private static final String ZK_PATH = "/";
+	@Value("${ZK_ADDRESS}")
+	private  String ZK_ADDRESS ;
+	@Value("${ZK_PATH}")
+	private String ZK_PATH;
 	private static CuratorFramework client;
 
 	/*

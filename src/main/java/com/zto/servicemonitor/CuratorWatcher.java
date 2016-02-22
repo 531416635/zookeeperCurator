@@ -18,6 +18,7 @@ import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.apache.curator.framework.recipes.cache.TreeCacheListener;
 import org.apache.curator.retry.RetryNTimes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,8 +33,12 @@ import com.alibaba.fastjson.JSON;
  */
 @RestController
 public class CuratorWatcher {
-	private static final String ZK_ADDRESS = "10.10.19.47:2181";
-	private static final String ZK_PATH = "/";
+	@Value("${ZK_ADDRESS}")
+	private  String ZK_ADDRESS ;
+	@Value("${ZK_PATH}")
+	private String ZK_PATH;
+	@Value("${SEND_ADDRESS}")
+	private String SEND_ADDRESS;
 	private static CuratorFramework client;
 
 	@Autowired
@@ -53,19 +58,19 @@ public class CuratorWatcher {
 				switch (event.getType()) {
 				case NODE_ADDED:
 					String strList1 = cacheValue.giveValue(client, ZK_PATH);
-					String res1 = sendPost("http://10.10.42.107/updateConfig",
+					String res1 = sendPost(SEND_ADDRESS,
 							strList1);
 					System.out.println("返回结果：" + res1);
 					break;
 				case NODE_REMOVED:
 					String strList2 = cacheValue.giveValue(client, ZK_PATH);
-					String res2 = sendPost("http://10.10.42.107/updateConfig",
+					String res2 = sendPost(SEND_ADDRESS,
 							strList2);
 					System.out.println("返回结果：" + res2);
 					break;
 				case NODE_UPDATED:
 					String strList3 = cacheValue.giveValue(client, ZK_PATH);
-					String res3 = sendPost("http://10.10.42.107/updateConfig",
+					String res3 = sendPost(SEND_ADDRESS,
 							strList3);
 					System.out.println("返回结果：" + res3);
 					break;
