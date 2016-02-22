@@ -1,2 +1,2 @@
 # zookeeperCurator
-这是一个spring boot的程序，用来操作 zookeeper的treecach
+这是一个spring boot的程序，使用treeCache来操作zookeeper节点信息的获取与变化监控
